@@ -57,7 +57,7 @@ export default function Sidebar() {
 
         {/* Menu Items */}
         <div>
-          <ul className="flex flex-col gap-6 items-center pt-5">
+          <ul className="flex flex-col gap-11 items-center pt-5">
             <li>
               <a href="#">
                 <img src="/assets/images/s-1.png" alt="" />
