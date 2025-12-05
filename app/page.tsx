@@ -1,65 +1,254 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
+import { CiCircleInfo } from "react-icons/ci";
+import { FaChargingStation } from "react-icons/fa";
+import { IoIosNotifications } from "react-icons/io";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { PiSealWarning } from "react-icons/pi";
+import DigitalTwin from "./components/DigitalTwin";
 
-export default function Home() {
+export default function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("digital");
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen  ">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col margin_leftMain pt-5">
+        {/* Header */}
+        <Header />
+
+        {/* Top Section */}
+        <section
+          className="
+  top_wrapper 
+  flex-wrap
+  gap-4
+  flex items-center justify-between 
+  px-5 py-3 mt-4 
+  bg-[#151727a8] 
+  rounded-tl-[35px] 
+  rounded-tr-[35px]
+"
+        >
+          {/* left */}
+          <div className="left_box flex items-center gap-3">
+            <FaArrowLeftLong />
+            <img src="assets/images/ev_station.png" alt="" />
+            <div>
+              <strong className="text-xs text-heading">ZYNIND001</strong>
+              <em className="mb-0  flex flex-col">
+                <span className="text-xs -mt-2 inline-block text-gray-400">
+                  80 kW-Dual Gun
+                </span>
+              </em>
+            </div>
+          </div>
+          <div className="right_arrow flex gap-3">
+            <div className="flex gap-2 cursor-pointer items-center p-2 border-1 rounded-sm border-slate-500 bg-[#01051133]">
+              <FaPlus className="text-slate-400 text-xs" />
+              <span className="text-slate-400 text-xs">Add Charger</span>
+            </div>
+            <div className="bg-[#30303133] flex items-center w-[35px] justify-center cursor-pointer">
+              <FaArrowDown className="text-slate-400 " />
+            </div>
+          </div>
+        </section>
+
+        {/* Bottom Section */}
+        <div className=" mt-6 pt-4">
+          <div className="w-full">
+            {/* Tabs */}
+            <div
+              className="
+  tabs_buttons
+    flex flex-wrap justify-between border-b border-gray-600
+    px-5 md:px-0 lg:px-5
+    gap-3 md:gap-4
+  "
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              {/* Info Tab */}
+              <button
+                onClick={() => setActiveTab("info")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "info"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <CiCircleInfo
+                  size={18}
+                  className={
+                    activeTab === "info" ? "text-[#87C445]" : "text-gray-400"
+                  }
+                />
+                Info
+              </button>
+
+              {/* Digital Twin */}
+              <button
+                onClick={() => setActiveTab("digital")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "digital"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <FaChargingStation
+                  size={18}
+                  className={
+                    activeTab === "digital" ? "text-[#87C445]" : "text-gray-400"
+                  }
+                />
+                Digital Twin
+              </button>
+
+              {/* Fault */}
+              <button
+                onClick={() => setActiveTab("fault")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "fault"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <IoIosNotifications
+                  size={18}
+                  className={
+                    activeTab === "fault" ? "text-[#87C445]" : "text-gray-400"
+                  }
+                />
+                Fault
+              </button>
+
+              {/* Alarm */}
+              <button
+                onClick={() => setActiveTab("alarm")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "alarm"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <CiCircleInfo
+                  size={18}
+                  className={
+                    activeTab === "alarm" ? "text-[#87C445]" : "text-gray-400"
+                  }
+                />
+                Alarm
+              </button>
+
+              {/* Configuration */}
+              <button
+                onClick={() => setActiveTab("config")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "config"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <LuLayoutDashboard
+                  size={18}
+                  className={
+                    activeTab === "config" ? "text-[#87C445]" : "text-gray-400"
+                  }
+                />
+                Configuration
+              </button>
+
+              {/* Maintenance */}
+              <button
+                onClick={() => setActiveTab("maintenance")}
+                className={`
+      pb-2 text-sm font-medium flex items-center gap-2
+      ${
+        activeTab === "maintenance"
+          ? "text-[#87C445] border-b-2 border-[#87C445]"
+          : "text-gray-400"
+      }
+    `}
+              >
+                <PiSealWarning
+                  size={18}
+                  className={
+                    activeTab === "maintenance"
+                      ? "text-[#87C445]"
+                      : "text-gray-400"
+                  }
+                />
+                Maintenance
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            <div className="mt-5 text-gray-300">
+              {activeTab === "info" && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Info Section</h3>
+                  <p>This is the Info tab content.</p>
+                </div>
+              )}
+
+              {activeTab === "digital" && <DigitalTwin />}
+
+              {activeTab === "fault" && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Fault Alarm Section
+                  </h3>
+                  <p>This is the Fault Alarm content.</p>
+                </div>
+              )}
+
+              {activeTab === "config" && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Configuration Section
+                  </h3>
+                  <p>This is the Configuration content.</p>
+                </div>
+              )}
+              {activeTab === "maintenance" && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    Maintenance Section
+                  </h3>
+                  <p>This is the Maintenance content.</p>
+                </div>
+              )}
+              {activeTab === "alarm" && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Alarm Section</h3>
+                  <p>This is the Alarm content.</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
